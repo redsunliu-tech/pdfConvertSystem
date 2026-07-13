@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    # 1. 数据库连接地址
+    url: jdbc:postgresql://127.0.0.1:5432/pdf_convert_db
+    # 2. 数据库用户名
+    username: ${DB_USER}
+    # 3. 数据库密码
+    password: ${DB_PWD}
+
+  jpa:
+    # 4. JPA 配置 (自动建表策略，开发阶段用 update)
+    hibernate:
+      ddl-auto: update
+    # 5. 打印 SQL 语句 (方便调试，上线后可改为 false)
+    show-sql: true
