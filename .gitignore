@@ -1,0 +1,12 @@
+###Project temporary files###
+*.logs
+*.tmp
+*.bak
+
+### IntelliJ IDEA ###
+.idea
+backend/.idea
+frontend/.idea
+*.iws
+*.iml
+*.ipr
