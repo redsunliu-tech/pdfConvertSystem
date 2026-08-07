@@ -17,8 +17,41 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB        # 单个文件最大50MB
+      max-request-size: 200MB     # 请求最大200MB
+
+
 # JWT配置
 jwt:
   secret: 9iX9BeXyQxe/SDb5TQyk1l9YfdfgQAPobxCuAStv9rc=
   access-token-expire: 3600000  # 1小时（毫秒）
   refresh-token-expire: 604800000  # 7天（毫秒）
+
+# 文件存储配置
+file:
+  upload-dir: /Users/hubertliu/IdeaProjects/pdfConvertSystem/backend/uploads  # 文件存储目录
+  converted-dir: /Users/hubertliu/IdeaProjects/pdfConvertSystem/backend/converted  # 转换后的文件存储目录
+  server-url: http://127.0.0.1:8080  # 服务器URL，用于构建下载链接
+
+#server:
+#  servlet:
+#    session:
+#      cookie:
+#        same-site: lax
+#        secure: false  # 本地 http 开发必须 false；线上 https 改成 true
+#        http-only: true
+#        path: /
+#        max-age: 86400
+
+app:
+  cookie:
+    http-only: true                # JS不可访问，提升安全性
+    secure: false                  # 本地开发用 false，线上 HTTPS 改为 true
+    same-site: Lax                 # 防 CSRF 攻击（Strict/Lax/None）
+    path: /                        # 全站有效
+    access-token-max-age: 3600     # Access Token 过期时间（秒）- 1小时
+    refresh-token-max-age: 604800  # Refresh Token 过期时间（秒）- 7天

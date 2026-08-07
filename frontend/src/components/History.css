@@ -1,0 +1,112 @@
+/* ============================================
+   历史记录容器
+   ============================================ */
+.history-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+.history-container h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+/* ============================================
+   历史记录表格
+   ============================================ */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.history-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ============================================
+   状态样式
+   ============================================ */
+.history-status {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.history-status.success {
+  color: #27ae60;
+}
+
+.history-status.failed {
+  color: #e74c3c;
+}
+
+.history-status.processing {
+  color: #f39c12;
+}
+
+/* ============================================
+   链接样式
+   ============================================ */
+.download-link {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.download-link:hover {
+  text-decoration: underline;
+}
+
+.view-link {
+  color: #27ae60;
+  text-decoration: none;
+}
+
+.view-link:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+}
+
+/* ============================================
+   空状态和加载状态
+   ============================================ */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   响应式设计
+   ============================================ */
+@media (max-width: 768px) {
+  .history-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

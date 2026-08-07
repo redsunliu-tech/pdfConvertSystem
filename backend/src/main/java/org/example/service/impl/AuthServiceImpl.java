@@ -1,8 +1,12 @@
 package org.example.service.impl;
 
+import org.example.config.CookieConfig;
 import org.example.dto.LoginRequest;
 import org.example.dto.LoginResponse;
 import org.example.dto.RegisterRequest;
+import org.example.dto.UserProfileResponse;
+import org.example.dto.ChangeEmailRequest;
+import org.example.dto.ChangePasswordRequest;
 import org.example.entity.User;
 import org.example.repository.UserRepository;
 import org.example.service.AuthService;
@@ -25,15 +29,18 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final CaptchaService captchaService;
+    private final CookieConfig cookieConfig;
 
     public AuthServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            JwtUtil jwtUtil,
-                           CaptchaService captchaService) {
+                           CaptchaService captchaService,
+                           CookieConfig cookieConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.captchaService = captchaService;
+        this.cookieConfig = cookieConfig;
     }
 
     @Override
@@ -85,8 +92,8 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtUtil.generateRefreshToken(user.getId(), user.getUsername());
 
         // 5. 设置HttpOnly Cookie
-        setCookie(response, "access_token", accessToken, 3600);   // 1小时
-        setCookie(response, "refresh_token", refreshToken, 604800); // 7天
+        setCookie(response, "access_token", accessToken, cookieConfig.getAccessTokenMaxAge());   // 1小时
+        setCookie(response, "refresh_token", refreshToken, cookieConfig.getRefreshTokenMaxAge()); // 7天
 
         return new LoginResponse(
                 user.getId(),
@@ -127,8 +134,8 @@ public class AuthServiceImpl implements AuthService {
             String newRefreshToken = jwtUtil.generateRefreshToken(user.getId(), user.getUsername());
 
             // 设置新Cookie
-            setCookie(response, "access_token", newAccessToken, 3600);
-            setCookie(response, "refresh_token", newRefreshToken, 604800);
+            setCookie(response, "access_token", newAccessToken, cookieConfig.getAccessTokenMaxAge());
+            setCookie(response, "refresh_token", newRefreshToken, cookieConfig.getRefreshTokenMaxAge());
 
             return new LoginResponse(
                     user.getId(),
@@ -142,16 +149,71 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+
+
+    @Override
+    public UserProfileResponse getUserProfile(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("用户不存在"));
+
+        return new UserProfileResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
+    }
+
+    @Override
+    public String changePassword(Long userId, ChangePasswordRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("用户不存在"));
+
+        // 验证当前密码
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new RuntimeException("当前密码不正确");
+        }
+
+        // 更新密码
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return "密码修改成功";
+    }
+
+    @Override
+    public String changeEmail(Long userId, ChangeEmailRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("用户不存在"));
+
+        // 验证密码
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("密码不正确");
+        }
+
+        // 检查新邮箱是否已被使用
+        if (userRepository.existsByEmail(request.getNewEmail())) {
+            throw new RuntimeException("该邮箱已被注册");
+        }
+
+        // 更新邮箱
+        user.setEmail(request.getNewEmail());
+        userRepository.save(user);
+
+        return "邮箱修改成功";
+    }
+
     /**
      * 设置Cookie
      */
     private void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
         ResponseCookie cookie = ResponseCookie.from(name, value)
-                .httpOnly(true)           // 关键：JS不可访问
-                .secure(true)             // 仅HTTPS
-                .sameSite("Strict")       // 防CSRF
+                .httpOnly(cookieConfig.isHttpOnly())           // 关键：JS不可访问
+                .secure(cookieConfig.isSecure())             // 仅HTTPS
+                .sameSite(cookieConfig.getSameSite())       // 防CSRF
                 .maxAge(maxAge)           // 过期时间（秒）
-                .path("/")                // 全站有效
+                .path(cookieConfig.getPath())                // 全站有效
                 .build();
 
         response.addHeader("Set-Cookie", cookie.toString());

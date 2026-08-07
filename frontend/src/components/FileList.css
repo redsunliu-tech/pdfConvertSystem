@@ -1,0 +1,643 @@
+.breadcrumb {
+    padding: 12px 16px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.breadcrumb-item {
+    display: inline;
+}
+
+.breadcrumb-link {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+}
+
+.breadcrumb-link:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-current {
+    color: #666;
+    font-weight: 500;
+}
+
+.breadcrumb-separator {
+    margin: 0 8px;
+    color: #999;
+}
+
+.convert-panel {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.convert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.convert-header h2 {
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 4px 8px;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.convert-info {
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.convert-info p {
+    margin: 8px 0;
+}
+
+.convert-options {
+    margin-bottom: 24px;
+}
+
+.convert-options h3 {
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.option-group {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.option-group label {
+    min-width: 140px;
+    font-weight: 500;
+    color: #555;
+}
+
+.option-group select {
+    flex: 1;
+    max-width: 350px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.option-group select:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+.checkbox-group {
+    margin-left: 140px;
+}
+
+.checkbox-group label {
+    min-width: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.convert-tips {
+    margin-top: 20px;
+    padding: 12px 16px;
+    background-color: #e7f3ff;
+    border-left: 4px solid #0066cc;
+    border-radius: 4px;
+}
+
+.convert-tips p {
+    margin: 0;
+    color: #004085;
+    font-size: 14px;
+}
+
+.convert-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.convert-progress {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.convert-progress h3 {
+    margin-bottom: 20px;
+}
+
+.status-indicator {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.status-uploaded {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-failed {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.convert-btn {
+    background-color: #0066cc;
+    color: white;
+}
+
+.convert-btn:hover:not(:disabled) {
+    background-color: #0052a3;
+}
+
+.view-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.view-btn:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.download-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.download-btn:hover:not(:disabled) {
+    background-color: #138496;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover:not(:disabled) {
+    background-color: #c82333;
+}
+
+.file-list-container {
+    padding: 20px;
+}
+
+.message {
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.file-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.upload-btn {
+    padding: 8px 16px;
+    background-color: #0066cc;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.upload-btn:hover {
+    background-color: #0052a3;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.file-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    table-layout: auto;
+}
+
+.file-table th,
+.file-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.file-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+}
+
+.file-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.file-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-uploaded {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-failed {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.file-table th:nth-child(2),
+.file-table td:nth-child(2) {
+    word-wrap: anywhere;
+    max-width: 250px;
+}
+.file-table th:nth-child(6),
+.file-table td:nth-child(6) {
+    white-space: nowrap;
+}
+
+.batch-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f0f7ff;
+    border: 1px solid #91d5ff;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.batch-selection-info {
+    font-size: 14px;
+    color: #0050b3;
+    font-weight: 500;
+}
+
+.batch-mixed-tip {
+    margin-left: 12px;
+    font-size: 12px;
+    color: #d46b08;
+    font-weight: normal;
+}
+
+.batch-action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.batch-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    color: white;
+    font-weight: 500;
+}
+
+.batch-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.batch-btn-image {
+    background: #722ed1;
+}
+
+.batch-btn-image:hover:not(:disabled) {
+    background: #9254de;
+}
+
+.batch-btn-pdf {
+    background: #1890ff;
+}
+
+.batch-btn-pdf:hover:not(:disabled) {
+    background: #40a9ff;
+}
+
+.batch-btn-office {
+    background: #fa8c16;
+}
+
+.batch-btn-office:hover:not(:disabled) {
+    background: #ffa940;
+}
+
+.select-all-cell {
+    width: 40px;
+    text-align: center;
+}
+
+.select-all-cell input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.file-row-selected {
+    background: #e6f7ff;
+}
+
+.file-table td input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.batch-result-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+}
+
+.batch-result-modal {
+    background: white;
+    border-radius: 8px;
+    width: 700px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.batch-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.batch-result-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.batch-result-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.batch-result-close:hover {
+    color: #333;
+}
+
+.batch-result-summary {
+    display: flex;
+    gap: 20px;
+    padding: 12px 20px;
+    background: #f9f9f9;
+    font-size: 14px;
+    color: #666;
+}
+
+.batch-success-count {
+    color: #52c41a;
+    font-weight: 500;
+}
+
+.batch-fail-count {
+    color: #ff4d4f;
+    font-weight: 500;
+}
+
+.batch-result-download-all {
+    margin-left: auto;
+    padding: 6px 16px;
+    background: #52c41a;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.batch-result-download-all:hover {
+    background: #73d13d;
+}
+
+.batch-result-list {
+    padding: 12px 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.batch-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 4px;
+    gap: 10px;
+    margin-bottom: 8px;
+    background: #fafafa;
+}
+
+.batch-result-item.completed {
+    background: #f6ffed;
+    border: 1px solid #b7eb8f;
+}
+
+.batch-result-item.failed {
+    background: #fff2f0;
+    border: 1px solid #ffccc7;
+}
+
+.batch-result-index {
+    color: #999;
+    font-size: 13px;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+}
+
+.batch-result-name {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.batch-result-download {
+    padding: 4px 12px;
+    background: #1890ff;
+    color: white;
+    border-radius: 4px;
+    font-size: 13px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.batch-result-download:hover {
+    background: #40a9ff;
+}
+
+.batch-result-error {
+    font-size: 12px;
+    color: #ff4d4f;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.batch-result-processing {
+    font-size: 12px;
+    color: #999;
+    flex-shrink: 0;
+}

@@ -3,6 +3,9 @@ package org.example.service;
 import org.example.dto.LoginRequest;
 import org.example.dto.LoginResponse;
 import org.example.dto.RegisterRequest;
+import org.example.dto.UserProfileResponse;
+import org.example.dto.ChangeEmailRequest;
+import org.example.dto.ChangePasswordRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,4 +37,27 @@ public interface AuthService {
      * @return 登录响应
      */
     LoginResponse refreshToken(HttpServletResponse response, WebRequest request);
+
+    /**
+     * 获取用户信息
+     * @param userId 用户ID
+     * @return 用户信息响应
+     */
+    UserProfileResponse getUserProfile(Long userId);
+
+    /**
+     * 修改密码
+     * @param userId 用户ID
+     * @param request 修改密码请求
+     * @return 操作结果消息
+     */
+    String changePassword(Long userId, ChangePasswordRequest request);
+
+    /**
+     * 修改邮箱
+     * @param userId 用户ID
+     * @param request 修改邮箱请求
+     * @return 操作结果消息
+     */
+    String changeEmail(Long userId, ChangeEmailRequest request);
 }

@@ -2,7 +2,15 @@ package org.example.repository;
 
 import org.example.entity.PdfTask;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-// 继承 JpaRepository 后，Spring Boot 会自动帮你实现保存、查询等功能
+import java.util.List;
+
+@Repository
 public interface PdfTaskRepository extends JpaRepository<PdfTask, Long> {
+
+    /**
+     * 根据用户ID查找文件，按上传时间降序排列
+     */
+    List<PdfTask> findByUserIdOrderByUploadTimeDesc(Long userId);
 }

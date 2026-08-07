@@ -10,3 +10,7 @@ frontend/.idea
 *.iws
 *.iml
 *.ipr
+cookies.txt
+.trae/
+.DS_Store
+**/.DS_Store

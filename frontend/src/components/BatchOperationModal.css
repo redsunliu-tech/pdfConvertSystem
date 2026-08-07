@@ -1,0 +1,383 @@
+.batch-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.batch-modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.batch-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.batch-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.batch-close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    padding: 4px 8px;
+}
+
+.batch-close-btn:hover {
+    color: #333;
+}
+
+.batch-modal-body {
+    padding: 16px 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.batch-file-list {
+    margin-bottom: 20px;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.batch-file-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f5f5f5;
+    font-size: 14px;
+    color: #666;
+}
+
+.batch-file-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.batch-add-btn {
+    padding: 4px 12px;
+    background: #1890ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.batch-add-btn:hover {
+    background: #40a9ff;
+}
+
+.file-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.file-picker-modal {
+    background: white;
+    border-radius: 8px;
+    width: 500px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.file-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.file-picker-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.file-picker-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.file-picker-close:hover {
+    color: #333;
+}
+
+.file-picker-body {
+    padding: 12px 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.file-picker-empty {
+    text-align: center;
+    color: #999;
+    padding: 30px 0;
+}
+
+.file-picker-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    gap: 10px;
+    transition: background 0.2s;
+}
+
+.file-picker-item:hover {
+    background: #f5f5f5;
+}
+
+.file-picker-item.added {
+    background: #f0f7ff;
+}
+
+.file-picker-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.file-picker-name {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-picker-added {
+    font-size: 12px;
+    color: #52c41a;
+    flex-shrink: 0;
+}
+
+.batch-clear-btn {
+    padding: 4px 12px;
+    background: #fff;
+    color: #ff4d4f;
+    border: 1px solid #ff4d4f;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.batch-clear-btn:hover {
+    background: #fff1f0;
+}
+
+.batch-file-items {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.batch-file-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+}
+
+.batch-file-item.draggable {
+    cursor: grab;
+}
+
+.batch-file-item.draggable:active {
+    cursor: grabbing;
+    background: #f0f7ff;
+}
+
+.batch-drag-handle {
+    color: #999;
+    font-size: 14px;
+    cursor: grab;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.batch-drag-handle:hover {
+    color: #666;
+}
+
+.batch-file-item:last-child {
+    border-bottom: none;
+}
+
+.batch-file-index {
+    width: 24px;
+    height: 24px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.batch-file-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.batch-file-name {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.batch-remove-btn {
+    padding: 4px 10px;
+    background: #fff;
+    color: #ff4d4f;
+    border: 1px solid #ff4d4f;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.batch-remove-btn:hover {
+    background: #fff1f0;
+}
+
+.batch-empty-tip {
+    padding: 30px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+.batch-config-section {
+    padding: 14px;
+    background: #fafafa;
+    border-radius: 6px;
+}
+
+.batch-config-section h3 {
+    margin: 0 0 12px 0;
+    font-size: 15px;
+    color: #333;
+}
+
+.batch-config-section .option-group {
+    margin-bottom: 12px;
+}
+
+.batch-config-section .option-group:last-child {
+    margin-bottom: 0;
+}
+
+.batch-config-section .option-group label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.batch-config-section .option-group select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+}
+
+.batch-config-section .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.batch-config-section .checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.batch-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 14px 20px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.batch-cancel-btn {
+    padding: 8px 20px;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+}
+
+.batch-cancel-btn:hover {
+    border-color: #40a9ff;
+    color: #40a9ff;
+}
+
+.batch-confirm-btn {
+    padding: 8px 24px;
+    background: #1890ff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+}
+
+.batch-confirm-btn:hover:not(:disabled) {
+    background: #40a9ff;
+}
+
+.batch-confirm-btn:disabled {
+    background: #d9d9d9;
+    cursor: not-allowed;
+}

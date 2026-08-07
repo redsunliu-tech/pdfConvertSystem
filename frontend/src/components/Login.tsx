@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { User, LoginRequest } from '../types';
+import { API_BASE_URL } from '../config';
 import './Login.css';
 
 interface LoginProps {
@@ -24,7 +25,7 @@ function Login({ onLogin }: LoginProps) {
 
     const loadCaptcha = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/auth/captcha', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/captcha`, {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -48,7 +49,7 @@ function Login({ onLogin }: LoginProps) {
                 captchaUuid
             };
 
-            const response = await fetch('http://localhost:8080/api/auth/login', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

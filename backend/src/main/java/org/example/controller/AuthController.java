@@ -1,6 +1,12 @@
 package org.example.controller;
 
-import org.example.dto.*;
+import org.example.dto.ChangePasswordRequest;
+import org.example.dto.ChangeEmailRequest;
+import org.example.dto.UserProfileResponse;
+import org.example.dto.CaptchaResponse;
+import org.example.dto.RegisterRequest;
+import org.example.dto.LoginResponse;
+import org.example.dto.LoginRequest;
 import org.example.service.AuthService;
 import org.example.service.CaptchaService;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +68,52 @@ public class AuthController {
         try {
             LoginResponse loginResponse = authService.refreshToken(response, request);
             return ResponseEntity.ok(loginResponse);
+        } catch (RuntimeException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        }
+    }
+
+
+    // 获取用户信息
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<?> getUserProfile(@PathVariable Long userId) {
+        try {
+            UserProfileResponse response = authService.getUserProfile(userId);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        }
+    }
+
+    // 修改密码
+    @PostMapping("/profile/{userId}/change-password")
+    public ResponseEntity<?> changePassword(@PathVariable Long userId,
+                                            @RequestBody ChangePasswordRequest request) {
+        try {
+            String message = authService.changePassword(userId, request);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", message);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        }
+    }
+
+    // 修改邮箱
+    @PostMapping("/profile/{userId}/change-email")
+    public ResponseEntity<?> changeEmail(@PathVariable Long userId,
+                                         @RequestBody ChangeEmailRequest request) {
+        try {
+            String message = authService.changeEmail(userId, request);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", message);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             Map<String, String> error = new HashMap<>();
             error.put("message", e.getMessage());

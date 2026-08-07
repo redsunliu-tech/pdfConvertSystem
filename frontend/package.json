@@ -4,14 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "static": "miniserve -p 5173 -i 127.0.0.1 --spa --index index.html dist"
   },
   "dependencies": {
     "react": "^19.2.7",
+    "react-doc-viewer": "^0.1.16",
     "react-dom": "^19.2.7",
+    "react-office-viewer": "^1.0.4",
     "react-router-dom": "^6.30.4"
   },
   "devDependencies": {
@@ -21,6 +24,6 @@
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.71.0",
     "typescript": "^7.0.2",
-    "vite": "^8.1.1"
+    "vite": "^8.1.5"
   }
 }
