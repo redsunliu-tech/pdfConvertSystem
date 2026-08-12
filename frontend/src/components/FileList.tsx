@@ -3,6 +3,7 @@ import { FileItem, ConvertOptions, ConvertTask, ConvertType, BatchTaskResult } f
 import { API_BASE_URL } from '../config';
 import './FileList.css';
 import BatchOperationModal from './BatchOperationModal';
+import PdfEditor from './PdfEditor';
 interface FileListProps {
     onNavigate: (path: Array<{label: string, action?: () => void}>) => void;
 }
@@ -37,6 +38,9 @@ function FileList({ onNavigate }: FileListProps) {
     const [showBatchResult, setShowBatchResult] = useState(false);
     const [batchResult, setBatchResult] = useState<BatchTaskResult | null>(null);
     const batchPollTimerRef = useRef<number | null>(null);
+
+    const [showPdfEditor, setShowPdfEditor] = useState(false);
+    const [editingPdfTask, setEditingPdfTask] = useState<{id: number, fileName: string} | null>(null);
 
     const fetchFiles = useCallback(async (signal?: AbortSignal) => {
         try {
@@ -281,6 +285,18 @@ function FileList({ onNavigate }: FileListProps) {
             const fullUrl = API_BASE_URL + currentTask.resultFileUrl + '/preview';
             window.open(fullUrl, '_blank');
         }
+    };
+
+    const handleOpenPdfEditor = (file: FileItem) => {
+        const fileId = file.id ? parseInt(file.id) : 0;
+        setEditingPdfTask({ id: fileId, fileName: file.fileName });
+        setShowPdfEditor(true);
+    };
+
+    const handleClosePdfEditor = () => {
+        setShowPdfEditor(false);
+        setEditingPdfTask(null);
+        void fetchFiles();
     };
 
     const handleDelete = async (fileId: string) => {
@@ -865,6 +881,16 @@ function FileList({ onNavigate }: FileListProps) {
                                                 <td>{file.uploadTime?.replace('T', ' ').substring(0, 19)}</td>
                                                 <td>{getStatusBadge(file.status)}</td>
                                                 <td>
+                                                    {file.fileType?.toUpperCase() === 'PDF' && (
+                                                        <button
+                                                            className="action-btn edit-btn"
+                                                            onClick={() => handleOpenPdfEditor(file)}
+                                                            disabled={file.status === 'processing'}
+                                                            title="编辑PDF"
+                                                        >
+                                                            编辑
+                                                        </button>
+                                                    )}
                                                     <button
                                                         className="action-btn convert-btn"
                                                         onClick={() => handleOpenConvertPanel(file)}
@@ -908,6 +934,14 @@ function FileList({ onNavigate }: FileListProps) {
                         </>
                     )}
                 </>
+            )}
+
+            {showPdfEditor && editingPdfTask && (
+                <PdfEditor
+                    pdfTaskId={editingPdfTask.id}
+                    fileName={editingPdfTask.fileName}
+                    onClose={handleClosePdfEditor}
+                />
             )}
 
             <BatchOperationModal

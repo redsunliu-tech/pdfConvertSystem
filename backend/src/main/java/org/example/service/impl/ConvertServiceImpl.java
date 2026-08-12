@@ -28,6 +28,7 @@ import org.example.repository.ConvertTaskRepository;
 import org.example.repository.PdfTaskRepository;
 import org.example.service.ConvertService;
 import org.example.config.OfficeConfig;
+import org.example.util.FileNameUtil;
 import org.jodconverter.core.DocumentConverter;
 import org.jodconverter.core.office.OfficeException;
 import org.jodconverter.core.document.DocumentFormat;
@@ -283,7 +284,7 @@ public class ConvertServiceImpl implements ConvertService {
         }
 
         // 创建临时目录存放图片
-        Path tempDir = Paths.get(convertedDir, "temp_" + System.currentTimeMillis());
+        Path tempDir = Paths.get(convertedDir, "temp_" + FileNameUtil.generateTimestamp());
         Files.createDirectories(tempDir);
 
         try (PDDocument document = PDDocument.load(sourcePath.toFile())) {
@@ -561,7 +562,7 @@ public class ConvertServiceImpl implements ConvertService {
      * 保存输出（单页直接保存，多页打包ZIP）
      */
     private void saveImageOutput(ConvertTask task, String baseName, Path tempDir) throws IOException {
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         File[] files = tempDir.toFile().listFiles();
         
         if (files == null || files.length == 0) {
@@ -602,7 +603,7 @@ public class ConvertServiceImpl implements ConvertService {
         
         Path sourcePath = Paths.get(sourceFile.getFilePath());
         String baseName = task.getSourceFileName().substring(0, task.getSourceFileName().lastIndexOf('.'));
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         String resultFileName = baseName + "_converted_" + timestamp + ".pdf";
         Path resultPath = Paths.get(convertedDir, resultFileName);
 
@@ -683,7 +684,7 @@ public class ConvertServiceImpl implements ConvertService {
         String sourceFileName = task.getSourceFileName();
         String baseName = sourceFileName.substring(0, sourceFileName.lastIndexOf('.'));
         String extension = sourceFileName.substring(sourceFileName.lastIndexOf('.') + 1).toLowerCase();
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         String resultFileName = baseName + "_converted_" + timestamp + ".pdf";
         Path resultPath = Paths.get(convertedDir, resultFileName);
         Path sourcePath = Paths.get(sourceFile.getFilePath());
@@ -908,7 +909,7 @@ public class ConvertServiceImpl implements ConvertService {
     }
 
     private void handleImageToPdfMerge(Long batchTaskId, java.util.List<BatchTaskItem> items, java.util.Map<String, Object> config) throws Exception {
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         String resultFileName = "merged_images_" + timestamp + ".pdf";
         Path resultPath = Paths.get(convertedDir, resultFileName);
         
@@ -998,7 +999,7 @@ public class ConvertServiceImpl implements ConvertService {
     }
 
     private void handleMergePdfBatch(Long batchTaskId, java.util.List<BatchTaskItem> items, java.util.Map<String, Object> config) throws Exception {
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         String resultFileName = "merged_pdf_" + timestamp + ".pdf";
         Path resultPath = Paths.get(convertedDir, resultFileName);
         
@@ -1050,7 +1051,7 @@ public class ConvertServiceImpl implements ConvertService {
         } else {
 
             // 第一步：先用 PDFMergerUtility 合并所有PDF
-            Path tempMergedPath = Paths.get(convertedDir, "temp_merged_" + System.currentTimeMillis() + ".pdf");
+            Path tempMergedPath = Paths.get(convertedDir, "temp_merged_" + FileNameUtil.generateTimestamp() + ".pdf");
             org.apache.pdfbox.multipdf.PDFMergerUtility merger = new org.apache.pdfbox.multipdf.PDFMergerUtility();
             merger.setDestinationFileName(tempMergedPath.toString());
             
@@ -1136,7 +1137,7 @@ public class ConvertServiceImpl implements ConvertService {
         
         Path sourcePath = Paths.get(sourceFile.getFilePath());
         String baseName = sourceFile.getFileName().substring(0, sourceFile.getFileName().lastIndexOf('.'));
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         String resultFileName = baseName + "_converted_" + timestamp + ".pdf";
         Path resultPath = Paths.get(convertedDir, resultFileName);
 
@@ -1197,7 +1198,7 @@ public class ConvertServiceImpl implements ConvertService {
         String sourceFileName = sourceFile.getFileName();
         String baseName = sourceFileName.substring(0, sourceFileName.lastIndexOf('.'));
         String extension = sourceFileName.substring(sourceFileName.lastIndexOf('.') + 1).toLowerCase();
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         String resultFileName = baseName + "_converted_" + timestamp + ".pdf";
         Path resultPath = Paths.get(convertedDir, resultFileName);
         Path sourcePath = Paths.get(sourceFile.getFilePath());
@@ -1248,7 +1249,7 @@ public class ConvertServiceImpl implements ConvertService {
         
         Path sourcePath = Paths.get(sourceFile.getFilePath());
         String baseName = sourceFile.getFileName().substring(0, sourceFile.getFileName().lastIndexOf('.'));
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+        String timestamp = FileNameUtil.generateSuffix();
         
         try (PDDocument document = PDDocument.load(sourcePath.toFile())) {
             PDFRenderer renderer = new PDFRenderer(document);

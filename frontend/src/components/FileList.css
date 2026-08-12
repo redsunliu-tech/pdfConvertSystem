@@ -242,6 +242,15 @@
     background-color: #0052a3;
 }
 
+.edit-btn {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.edit-btn:hover:not(:disabled) {
+    background-color: #5a32a3;
+}
+
 .view-btn {
     background-color: #28a745;
     color: white;

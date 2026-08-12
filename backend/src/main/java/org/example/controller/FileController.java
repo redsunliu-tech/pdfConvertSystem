@@ -4,6 +4,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.dto.FileUploadRequest;
 import org.example.dto.FileResponse;
+import org.example.entity.PdfTask;
+import org.example.repository.PdfTaskRepository;
 import org.example.service.FileService;
 import org.example.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +34,16 @@ public class FileController {
 
     private final FileService fileService;
     private final JwtUtil jwtUtil;
+    private final PdfTaskRepository pdfTaskRepository;
     @Value("${file.upload-dir}")
     private String uploadDir;
     @Value("${file.converted-dir}")
     private String convertedDir;
 
-    public FileController(FileService fileService, JwtUtil jwtUtil) {
+    public FileController(FileService fileService, JwtUtil jwtUtil, PdfTaskRepository pdfTaskRepository) {
         this.fileService = fileService;
         this.jwtUtil = jwtUtil;
+        this.pdfTaskRepository = pdfTaskRepository;
     }
 
     /**
@@ -339,5 +343,84 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
+    }
+
+    /**
+     * PDF预览接口
+     * GET /api/files/preview/{pdfTaskId}
+     */
+    @GetMapping("/preview/{pdfTaskId}")
+    public ResponseEntity<Resource> previewPdf(
+            @PathVariable Long pdfTaskId,
+            @RequestParam(required = false) String token,
+            HttpServletRequest request) {
+
+        try {
+            Long userId = getUserIdFromRequest(request);
+
+            if (userId == null && token != null && !token.isEmpty()) {
+                try {
+                    if (!jwtUtil.isTokenExpired(token)) {
+                        userId = jwtUtil.getUserIdFromToken(token);
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            if (userId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            PdfTask pdfTask = pdfTaskRepository.findById(pdfTaskId).orElse(null);
+            if (pdfTask == null || !pdfTask.getUser().getId().equals(userId)) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Path filePath = Paths.get(pdfTask.getFilePath()).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + pdfTask.getFileName() + "\"")
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/converted/{fileName}")
+    public ResponseEntity<Resource> getConvertedFile(
+            @PathVariable String fileName,
+            @RequestParam(required = false) String option) {
+
+        try {
+            Path filePath = Paths.get(convertedDir).resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = "application/pdf";
+            String disposition = "inline";
+
+            if ("download".equalsIgnoreCase(option)) {
+                String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20");
+                disposition = "attachment; filename=\"" + encodedFileName + "\"; filename*=UTF-8''" + encodedFileName;
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, disposition)
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

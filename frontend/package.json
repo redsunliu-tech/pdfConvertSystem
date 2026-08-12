@@ -11,6 +11,7 @@
     "static": "miniserve -p 5173 -i 127.0.0.1 --spa --index index.html dist"
   },
   "dependencies": {
+    "pdfjs-dist": "^4.4.168",
     "react": "^19.2.7",
     "react-doc-viewer": "^0.1.16",
     "react-dom": "^19.2.7",

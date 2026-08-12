@@ -30,7 +30,7 @@ async function changeEmail(userId: number, password: string, newEmail: string): 
 
 // 修改密码 API 调用
 async function changePassword(userId: number, currentPassword: string, newPassword: string): Promise<string> {
-    const response = await fetch(`${API_BASE_URL}/profile/${userId}/change-password`, {
+    const response = await fetch(`${AUTH_API_URL}/profile/${userId}/change-password`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
