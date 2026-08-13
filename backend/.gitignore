@@ -1,7 +1,10 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# 本地开发配置（含敏感信息）
+config/application.yml
+
 .kotlin
 uploads/
 converted/

@@ -9,14 +9,13 @@ import org.springframework.context.annotation.Lazy;
 public class OfficeConfig {
 
     @Bean(destroyMethod = "stop")
-    @Lazy // 核心：第一次注入使用Bean时才初始化
+    @Lazy
     public LocalOfficeManager localOfficeManager() {
 
         return LocalOfficeManager.builder()
-                .officeHome("/Applications/LibreOffice.app/Contents") // Mac路径
+                .officeHome("/Applications/LibreOffice.app/Contents")
                 .maxTasksPerProcess(10)
                 .processTimeout(120000L)
                 .build();
-        // 移除manager.start()，调用转换工具时手动启动
     }
 }

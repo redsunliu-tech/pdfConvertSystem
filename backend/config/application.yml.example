@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/pdf_convert_db
+    username: postgres
+    password: postgres
+
+file:
+  upload-dir: /IdeaProjects/pdfConvertSystem/backend/uploads
+  converted-dir: /IdeaProjects/pdfConvertSystem/backend/converted
+  server-url: http://127.0.0.1:8080
