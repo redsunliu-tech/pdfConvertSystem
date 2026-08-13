@@ -74,11 +74,24 @@ public class PdfEditUtil {
     public static void addImageWatermark(File source, File target, String imageUrl,
                                          float opacity, float width, float height) throws IOException {
         try (PDDocument document = PDDocument.load(source)) {
-            PDImageXObject pdImage = PDImageXObject.createFromFile(imageUrl, document);
+            PDImageXObject pdImage;
+
+            if (imageUrl.startsWith("data:")) {
+                int commaIdx = imageUrl.indexOf(',');
+                String base64Data = commaIdx >= 0 ? imageUrl.substring(commaIdx + 1) : imageUrl;
+                byte[] imageBytes = Base64.getDecoder().decode(base64Data);
+                pdImage = PDImageXObject.createFromByteArray(document, imageBytes, "watermark");
+            } else {
+                pdImage = PDImageXObject.createFromFile(imageUrl, document);
+            }
+
+            PDExtendedGraphicsState gs = new PDExtendedGraphicsState();
+            gs.setNonStrokingAlphaConstant(opacity);
 
             for (PDPage page : document.getPages()) {
                 PDPageContentStream cs = new PDPageContentStream(document, page,
                         PDPageContentStream.AppendMode.APPEND, true, true);
+                cs.setGraphicsStateParameters(gs);
 
                 PDRectangle mediaBox = page.getMediaBox();
                 float pageWidth = mediaBox.getWidth();

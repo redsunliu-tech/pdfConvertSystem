@@ -33,6 +33,8 @@ public class PdfEditRequest {
         private Float opacity;
         private Float rotation;
         private String imageUrl;
+        private Float imageWidth;
+        private Float imageHeight;
     }
 
     @Data

@@ -128,10 +128,12 @@ public class PdfEditServiceImpl implements PdfEditService {
                     watermarkRequest.getOpacity() != null ? watermarkRequest.getOpacity() : 0.5f,
                     watermarkRequest.getRotation() != null ? watermarkRequest.getRotation() : 30);
         } else if ("image".equals(watermarkRequest.getType())) {
+            float width = watermarkRequest.getImageWidth() != null ? watermarkRequest.getImageWidth() : 100;
+            float height = watermarkRequest.getImageHeight() != null ? watermarkRequest.getImageHeight() : 100;
             PdfEditUtil.addImageWatermark(sourceFile, targetFile,
                     watermarkRequest.getImageUrl(),
                     watermarkRequest.getOpacity() != null ? watermarkRequest.getOpacity() : 0.5f,
-                    100, 100);
+                    width, height);
         }
     }
 
